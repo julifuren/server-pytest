@@ -1,0 +1,13 @@
+#上传数据文件的测试用例，需要上传的数据放置在工程文件files中的对应文件夹中
+#data_type需要和files下的文件名格式保持一致
+
+case01:
+  data_file: 'ui-test'
+  data_set: '矢量'
+  data_type: '矢量数据文件'
+  file_name: 'region-GK.zip'
+case02:
+  data_file: 'ui-test'
+  data_set: '正射'
+  data_type: '影像或栅格文件'
+  file_name: '道路1706_前_2000.zip'

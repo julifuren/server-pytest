@@ -1,0 +1,8 @@
+#开启验证码参数
+yzm:
+  True
+#  False
+url:
+  url-formal: 'https://engine.piesat.cn/server/data/'
+  url-dev: 'https://engine-dev.piesat.cn/server/data/'
+

@@ -1,0 +1,15 @@
+# 登录账号
+'account01':
+  mes: '普通用户'
+  username: '4cdmkzd7@nqmo.com'
+  pwd: '654321'
+
+'account02':
+  mes: '组织管理员'
+  username: 'vcoqvn26@nqmo.com'
+  pwd: '123456'
+
+'account03':
+  mes: '组织管理员'
+  username: 'kk4ae61z@nqmo.com'
+  pwd: '123456'
