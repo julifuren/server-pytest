@@ -36,7 +36,9 @@ page_data_type_select = ('xpath', '//div[@class="upload-container"]/div/div[@cla
 page_upload_input = ('xpath', "//input[@name='file']")
 # 文件上传成功后标识
 page_upload_file_status = ('css selector', '[class="el-icon-document"]')
-# 添加数据弹窗中的 导入 按钮
+# 添加数据弹窗中的 导入或解析 按钮
 page_upload_import_btn = ('css selector','[class="add-data-footer flex-end"]>span div span')
+# csv文件的二次导入按钮
+page_upload_csv_import_btn = ('xpath', '//span[text()="导 入"]')
 # 添加数据弹窗中的 进度条100%
 page_progress_bar_text = ('xpath', '//div[text()="100%"]')

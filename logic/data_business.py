@@ -60,25 +60,20 @@ class DataBusiness(WebKeys):
         sleep(1)
         return text
 
-
     # 上传数据业务流程
     def upload_data_business(self, set_name, data_type, file_name):
         with allure.step("流程代码路径：%s" % __file__):
             pass
-        with allure.step('点击导航栏数据按钮'):
-            # 点击导航栏数据按钮
+        with allure.step('点击数据模块'):
             self.locator(*other_page.page_main_Data_btn).click()
         with allure.step('点击ui-test文件目录'):
-            # 点击ui-test文件目录
             self.locator(*data_page.page_data_dir_uitest_btn).click()
         with allure.step(f'点击{set_name}数据集'):
-            # 点击指定的数据集
-            self.locator_explicitly_until('xpath', '//span[text()="{}" and @class="dataset-span"]'.format(set_name)).click()
+            self.locator_explicitly_until('xpath',
+                                          '//span[text()="{}" and @class="dataset-span"]'.format(set_name)).click()
         with allure.step('点击添加数据按钮'):
-            # 点击工具栏的添加数据按钮
             self.locator(*data_page.page_tool_add_data).click()
-        with allure.step('点击’通过本地上传‘'):
-            # 点击’通过本地上传‘
+        with allure.step('选择通过本地上传‘'):
             self.locator(*data_page.page_upload_local_btn).click()
         with allure.step(f'选择上传的数据类型为{data_type}'):
             # 点击数据类型下拉框
@@ -89,11 +84,17 @@ class DataBusiness(WebKeys):
         with allure.step('上传文件'):
             # 上传文件
             data_path = os.path.join(get_project_path(), 'files', data_type, file_name)
+            # 输入文件路径
             self.locator(*data_page.page_upload_input).send_keys(data_path)
-            self.locator(*data_page.page_upload_file_status)
+            # 定位文件上传成功后的标识
             self.locator_explicitly_until(*data_page.page_upload_file_status, time=60)
         with allure.step('上传文件进度百分比监测'):
+            # 点击导入或解析按钮
             self.locator(*data_page.page_upload_import_btn).click()
+            if data_type == '带有坐标信息的表格文件':
+                self.locator(*data_page.page_upload_csv_import_btn).click()
+            else:
+                pass
             # 调用监测数据上传进度条方法
             self.monitor_progress_bar()
         with allure.step('导入文件状态监测'):
@@ -118,7 +119,7 @@ class DataBusiness(WebKeys):
             raise Exception('文件上传超时')
 
     # 监测数据导入弹窗状态
-    def monitor_upload_state(self,import_max_time=180):
+    def monitor_upload_state(self, import_max_time=180):
         '''
 
         :param import_max_time:数据导入超时时间默认180s
@@ -128,11 +129,12 @@ class DataBusiness(WebKeys):
         start_time = time.time()
         while time.time() - start_time < import_max_time:
             try:
-                self.locator_explicitly_not_until('css selector', '[class="init-store-status-text"]', time=3)
+                self.locator_explicitly_not_until('css selector', '[class="init-store-status-text"]', time=1)
                 print('导入成功')
                 return '数据导入成功'
 
-            except:
+            except TimeoutException:
+
                 ele = self.locator_explicitly_until('css selector', '[class="init-store-status-text"]')
                 if ele.text == '正在导入数据':
                     pass

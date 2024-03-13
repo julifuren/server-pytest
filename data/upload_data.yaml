@@ -2,12 +2,36 @@
 #data_type需要和files下的文件名格式保持一致
 
 case01:
+  case_name: '矢量面数据上传'
   data_file: 'ui-test'
   data_set: '矢量'
   data_type: '矢量数据文件'
   file_name: 'region-GK.zip'
+
 case02:
+  case_name: '正射数据上传'
   data_file: 'ui-test'
   data_set: '正射'
   data_type: '影像或栅格文件'
   file_name: '道路1706_前_2000.zip'
+
+case03:
+  case_name: 'json数据上传'
+  data_file: 'ui-test'
+  data_set: 'json'
+  data_type: 'JSON格式矢量数据文件'
+  file_name: '四川省.json'
+
+case04:
+  case_name: 'GDB数据上传'
+  data_file: 'ui-test'
+  data_set: '地理数据库'
+  data_type: '地理数据库文件'
+  file_name: 'China.gdb.zip'
+
+case05:
+  case_name: '坐标文件csv数据上传'
+  data_file: 'ui-test'
+  data_set: '坐标文件'
+  data_type: '带有坐标信息的表格文件'
+  file_name: '调查对象信息.csv'
