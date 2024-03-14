@@ -129,7 +129,7 @@ class DataBusiness(WebKeys):
         start_time = time.time()
         while time.time() - start_time < import_max_time:
             try:
-                self.locator_explicitly_not_until('css selector', '[class="init-store-status-text"]', time=1)
+                self.locator_explicitly_not_until('css selector', '[class="init-store-status-text"]', time=1,poll_frequency=0.1)
                 print('导入成功')
                 return '数据导入成功'
 

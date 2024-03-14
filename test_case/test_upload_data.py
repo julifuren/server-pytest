@@ -10,23 +10,26 @@ class TestUploadData:
 
     # 解析数据上传测试用例数据
     data = pase_yaml('data','upload_data.yaml')
+    vector = data['vector']
+    dom = data['dom']
+    json = data['json']
 
     # @pytest.mark.skip
-    @allure.title(data['case01']['case_name'])
+    @allure.title(vector['case01']['case_name'])
     def test_upload_vector(self,browser, login,refresh_driver):
-        case = self.data['case01']
+        case = self.vector['case01']
         upload_data = DataBusiness(browser)
         upload_data.upload_data_business(case['data_set'], case['data_type'], case['file_name'])
 
-    @pytest.mark.skip
-    @allure.title(data['case02']['case_name'])
+    # @pytest.mark.skip
+    @allure.title(dom['case01']['case_name'])
     def test_upload_dom(self, browser, refresh_driver):
-        case = self.data['case02']
+        case = self.dom['case01']
         upload_data = DataBusiness(browser)
         upload_data.upload_data_business(case['data_set'], case['data_type'], case['file_name'])
 
-    @allure.title(data['case05']['case_name'])
+    @allure.title(json['case01']['case_name'])
     def test_upload_csv(self, browser, refresh_driver):
-        case = self.data['case05']
+        case = self.json['case01']
         upload_data = DataBusiness(browser)
         upload_data.upload_data_business(case['data_set'], case['data_type'], case['file_name'])

@@ -90,7 +90,7 @@ class WebKeys:
     def locator_explicitly_not_until(self, name, value, time=10,poll_frequency=0.2):
         # el = WebDriverWait(self.driver, timeout=time, poll_frequency=0.5).until(
         #     lambda el1: self.driver.find_element(name, value), message='显式等待失败')
-        el = WebDriverWait(self.driver,time, poll_frequency).until_not(ES.presence_of_element_located((name,value)))
+        el = WebDriverWait(self.driver,time, poll_frequency).until_not(ES.presence_of_element_located((name,value)),message='显示等待失败')
         return el
 
     def find_element_explicitly(self, locator, timeout=10, poll_frequency=0.5):
