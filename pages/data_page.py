@@ -14,6 +14,13 @@ page_data_dir_uitest_btn = ('xpath', '//span[text()="ui-test"]/../../preceding-s
 page_create_set_btn = ('css selector', '[class="edit-image"] [class="el-image__inner"]')
 # 工具栏添加数据按钮
 page_tool_add_data = ('css selector', '[class="btn-item"]:nth-child(2) [class="el-image el-tooltip"]')
+# 工具栏添加刷新按钮
+page_tool_refresh = ('xpath','//div[@class="group-info-left flex-start"]/div[6]/div')
+# 导航栏的任务按钮
+page_task_btn = ('css selector', '[class="i-icon i-icon-transaction-order"]')
+# 任务列表中的第一条任务
+page_task_first_status = ('xpath', '//*[@class="status-card-content"]/div[1]//div[@class="status-judge"]/span')
+
 
 """
 创建数据集弹窗元素
@@ -37,8 +44,12 @@ page_upload_input = ('xpath', "//input[@name='file']")
 # 文件上传成功后标识
 page_upload_file_status = ('css selector', '[class="el-icon-document"]')
 # 添加数据弹窗中的 导入或解析 按钮
-page_upload_import_btn = ('css selector','[class="add-data-footer flex-end"]>span div span')
+page_upload_import_btn = ('css selector', '[class="add-data-footer flex-end"]>span div span')
 # csv文件的二次导入按钮
 page_upload_csv_import_btn = ('xpath', '//span[text()="导 入"]')
 # 添加数据弹窗中的 进度条100%
 page_progress_bar_text = ('xpath', '//div[text()="100%"]')
+# 添加数据弹窗 关闭 按钮
+page_progress_close_btn = ('xpath', '//div[contains(@class,"create-type")]//i')
+# 添加数据弹窗 数据导入 文本
+page_progress_import_statue = ('css selector', '[class="init-store-status-text"]')

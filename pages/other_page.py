@@ -36,3 +36,5 @@ page_login_btn = ('css selector', '[id="agreement"]')
 page_login_fail_pop_ele = ('xpath', '//div[@class="text-center mb-2"]//span[2]')
 # 验证码图片
 page_verificationcode_pic = ('css selector','[placeholder="请输入验证码"]~img')
+# 验证码登录文本
+page_verificationcode_text = ('xpath','//span[text()="验证码登录"]')

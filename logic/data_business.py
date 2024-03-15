@@ -97,9 +97,11 @@ class DataBusiness(WebKeys):
                 pass
             # 调用监测数据上传进度条方法
             self.monitor_progress_bar()
-        with allure.step('导入文件状态监测'):
+        with allure.step('任务列表状态监测'):
             # 调用监测弹窗状态方法
-            self.monitor_upload_state()
+            # self.monitor_upload_state()
+            ele = self.monitor_upload_task_text()
+            return ele
 
     # 监测数据上传进度条
     def monitor_progress_bar(self, upload_max_time=300):
@@ -125,19 +127,37 @@ class DataBusiness(WebKeys):
         :param import_max_time:数据导入超时时间默认180s
         :return:数据导入结果
         '''
-        self.locator_explicitly_until('css selector', '[class="init-store-status-text"]')
         start_time = time.time()
+        self.locator_explicitly_until('css selector', '[class="init-store-status-text"]')
         while time.time() - start_time < import_max_time:
             try:
-                self.locator_explicitly_not_until('css selector', '[class="init-store-status-text"]', time=1,poll_frequency=0.1)
-                print('导入成功')
-                return '数据导入成功'
-
-            except TimeoutException:
-
-                ele = self.locator_explicitly_until('css selector', '[class="init-store-status-text"]')
+                ele = self.locator_explicitly_until('css selector', '[class="init-store-status-text"]', time=2)
                 if ele.text == '正在导入数据':
                     pass
                 else:
                     print('数据导入失败')
                     return ele.text
+
+            except TimeoutException:
+                self.locator_explicitly_not_until('css selector', '[class="init-store-status-text"]', time=1,
+                                                  poll_frequency=0.1)
+                return '数据导入成功'
+
+        return '数据导入超时'
+
+    # 监测任务列表中的状态
+    def monitor_upload_task_text(self, import_max_time=180):
+        self.locator_explicitly_until(*data_page.page_progress_import_statue)
+        self.locator_explicitly_until(*data_page.page_progress_close_btn).click()
+
+        start_time = time.time()
+        while time.time() - start_time < import_max_time:
+            self.locator(*data_page.page_task_btn).click()
+            sleep(1)
+            task_status = self.locator(*data_page.page_task_first_status).text
+            if task_status == '正在导入':
+                sleep(4)
+                self.locator(*data_page.page_tool_refresh).click()
+                continue
+            else:
+                return task_status
