@@ -1,11 +1,11 @@
-#-
-#  case: '创建矢量数据集'
-#  data_dir: 'ui-test'
-#  data_set: '矢量'
-#-
-#  case: '创建正射数据集'
-#  data_dir: 'ui-test'
-#  data_set: '正射'
+-
+  case: '创建矢量数据集'
+  data_dir: 'ui-test'
+  data_set: '矢量'
+-
+  case: '创建正射数据集'
+  data_dir: 'ui-test'
+  data_set: '正射'
 
 -
   case: '创建json数据集'

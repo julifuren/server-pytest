@@ -4,11 +4,9 @@ import os
 
 import allure
 import yaml
-from selenium import webdriver
 from selenium.webdriver.support import expected_conditions
-from selenium.webdriver.support.wait import WebDriverWait
-
 from selenium.webdriver.support import expected_conditions as ES
+from selenium.webdriver.support.wait import WebDriverWait
 
 """
 类外面封装一些共用的方法
@@ -50,7 +48,6 @@ class WebKeys:
         # 编写代码为了自动关联出代码，写完后注释掉，不然会多开一个浏览器
         # self.driver = webdriver.Chrome()
 
-
     @allure.step('传入的url标识为：{url_biaoshi}')
     def open_url(self, url_biaoshi):
         data = pase_yaml('config', 'config.yaml')
@@ -59,6 +56,7 @@ class WebKeys:
 
         # with allure.step(f'打开网址{url_data}'):
         #     self.driver.get(url_data)
+
     # 元素定位方法封装
     def locator(self, name, value):
         """
@@ -82,15 +80,15 @@ class WebKeys:
 
     # 显示等待定位元素
     def locator_explicitly_until(self, name, value, time=10, poll_frequency=0.2):
-
-        ele = WebDriverWait(self.driver,time, poll_frequency).until(ES.presence_of_element_located((name,value)))
+        ele = WebDriverWait(self.driver, time, poll_frequency).until(ES.presence_of_element_located((name, value)))
         return ele
 
     # 显示等待定位元素直到元素消失
-    def locator_explicitly_not_until(self, name, value, time=10,poll_frequency=0.2):
+    def locator_explicitly_not_until(self, name, value, time=10, poll_frequency=0.2):
         # el = WebDriverWait(self.driver, timeout=time, poll_frequency=0.5).until(
         #     lambda el1: self.driver.find_element(name, value), message='显式等待失败')
-        el = WebDriverWait(self.driver,time, poll_frequency).until_not(ES.presence_of_element_located((name,value)),message='显示等待失败')
+        el = WebDriverWait(self.driver, time, poll_frequency).until_not(ES.presence_of_element_located((name, value)),
+                                                                        message='显示等待失败')
         return el
 
     def find_element_explicitly(self, locator, timeout=10, poll_frequency=0.5):
@@ -102,4 +100,8 @@ if __name__ == '__main__':
     # path = get_project_path()
     # print(os.path.join(path, 'other'))
     # print(pase_yaml('config', 'login_data.yaml'))
-    print(pase_yaml('data','upload_data.yaml'))
+    # data = pase_yaml('data','create_set.yaml')
+    # vector = data['vector']
+    # print(data)
+    data2 = pase_yaml('data', 'upload_data.yaml')
+    print(data2['文档文件'])

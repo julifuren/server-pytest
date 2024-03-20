@@ -8,7 +8,7 @@ from logic.login_business import LoginBusiness
 
 
 @allure.title('刷新浏览器')
-@pytest.fixture(scope='function')
+@pytest.fixture(scope='function',autouse=True)
 def refresh_driver(browser):
     driver = browser
     driver.refresh()
@@ -19,8 +19,8 @@ def refresh_driver(browser):
 @pytest.fixture(scope='package')
 def login(browser):
     login_business = LoginBusiness(browser)
-    login_business.open_url('url-formal')  # 打开config.yaml文件中对应的url
-    login_business.login('account01','url-formal')  # login_data.yaml中的登录的账号
+    login_business.open_url('url-192')  # 打开config.yaml文件中对应的url
+    login_business.login('account04','url-192')  # login_data.yaml中的登录的账号
 
 
 @allure.title('初始化driver')

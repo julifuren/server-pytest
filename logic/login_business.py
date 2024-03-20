@@ -41,7 +41,6 @@ class LoginBusiness(WebKeys):
                 with allure.step('图像识别解析验证码'):
                     # 解析输入验证码
                     yanzheng = parse_yanzheng(url)
-                    # yanzheng = '1234'
                     self.locator(*other_page.page_login_verificationcode).send_keys(yanzheng)
                 with allure.step(f'尝试第{attempts}次登录'):
                     self.locator(*other_page.page_login_btn).click()
@@ -64,6 +63,16 @@ class LoginBusiness(WebKeys):
             if attempts == max_attempts:
                 raise Exception("登录失败，已尝试登录{}次".format(max_attempts))
 
+        elif not pase_data['yzm']:
+            with allure.step(f'输入账号:{data[account_num]["username"]} 输入密码：{data[account_num]["pwd"]}'):
+                self.input_userinfo(data[account_num]['username'], data[account_num]['pwd'])
+                self.locator(*other_page.page_login_btn).click()
+            try:
+                self.locator_explicitly_until(*other_page.page_main_Data_btn, time=3)
+                print('检测到导航栏 数据 模块，登录成功')
+
+            except TimeoutException:
+                raise Exception('未检测到导航栏中的 数据 按钮，请检查是否登录成功')
 
 if __name__ == '__main__':
     from selenium import webdriver

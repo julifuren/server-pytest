@@ -17,4 +17,4 @@ def test_create_set(browser, login,refresh_driver, test_data):
 
 
 if __name__ == '__main__':
-    pytest.main(['-sv'])
+    pytest.main(['-sv','test_create_set.py'])

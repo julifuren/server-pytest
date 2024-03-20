@@ -2,12 +2,10 @@
 import os
 import time
 from time import sleep
-
 import allure
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
-
 from kew_word.kewword import WebKeys, get_project_path
 from pages import other_page, data_page
 
@@ -96,22 +94,24 @@ class DataBusiness(WebKeys):
             else:
                 pass
             # 调用监测数据上传进度条方法
-            self.monitor_progress_bar()
+            self.monitor_progress_bar(data_type)
         with allure.step('任务列表状态监测'):
-            # 调用监测弹窗状态方法
-            # self.monitor_upload_state()
+            # 调用数监测任务状态方法
             ele = self.monitor_upload_task_text()
             return ele
 
     # 监测数据上传进度条
-    def monitor_progress_bar(self, upload_max_time=300):
+    def monitor_progress_bar(self, data_type, upload_max_time=120):
         """
 
-        :param upload_max_time: 默认最大上传超时时间300s
+        :param data_type: 数据类型
+        :param upload_max_time: 默认最大上传超时时间120s
         :return:
         """
+        if data_type in ['倾斜摄影模型', '影像或栅格文件']:
+            upload_max_time = 300
         try:
-            # 查找文件上传的进度条为100%,最大超时时间300s
+            # 查找文件上传的进度条为100%,最大超时时间120s
             self.locator_explicitly_until(*data_page.page_progress_bar_text, time=upload_max_time)
             print('文件上传成功')
 
@@ -122,11 +122,11 @@ class DataBusiness(WebKeys):
 
     # 监测数据导入弹窗状态
     def monitor_upload_state(self, import_max_time=180):
-        '''
+        """
 
         :param import_max_time:数据导入超时时间默认180s
         :return:数据导入结果
-        '''
+        """
         start_time = time.time()
         self.locator_explicitly_until('css selector', '[class="init-store-status-text"]')
         while time.time() - start_time < import_max_time:
@@ -156,8 +156,11 @@ class DataBusiness(WebKeys):
             sleep(1)
             task_status = self.locator(*data_page.page_task_first_status).text
             if task_status == '正在导入':
-                sleep(4)
+                sleep(5)
                 self.locator(*data_page.page_tool_refresh).click()
                 continue
-            else:
+            elif task_status in ['导入失败','导入成功']:
                 return task_status
+
+        else:
+            return '导入超时'

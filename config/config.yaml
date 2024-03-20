@@ -1,8 +1,9 @@
 #开启验证码参数
 yzm:
-  True
-#  False
+#  True
+  False
 url:
   url-formal: 'https://engine.piesat.cn/server/data/'
   url-dev: 'https://engine-dev.piesat.cn/server/data/'
+  url-192: 'http://192.168.1.192:30080/data/#/'
 

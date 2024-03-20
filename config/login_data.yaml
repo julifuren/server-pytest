@@ -13,3 +13,8 @@
   mes: '组织管理员'
   username: 'kk4ae61z@nqmo.com'
   pwd: '123456'
+
+'account04':
+  mes: '超级管理员'
+  username: 'server'
+  pwd: 'server'

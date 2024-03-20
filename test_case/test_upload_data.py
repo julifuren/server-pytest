@@ -11,46 +11,74 @@ class TestUploadData:
     data = pase_yaml('data', 'upload_data.yaml')
     vector = data['vector']
     dom = data['dom']
-    json = data['json']
-    GDB = data['GDB']
-    coordinate = data['坐标文件']
-    document = data['文档文件']
+    jsons = data['json']
+    gdb = data['GDB']
+    coordinate = data['coordinate']
+    document = data['document']
+    media = data['media']
+    dem = data['DEM']
+    osgb = data['OSGB']
 
-    # @pytest.mark.skip
-    @allure.title(vector['case01']['case_name'])
-    def test_upload_vector(self, browser, login, refresh_driver):
-        case = self.vector['case01']
+    @pytest.mark.parametrize('all_data', vector)
+    def test_upload_vector(self, browser, all_data, login):
+        # allure.dynamic.story('矢量类型数据上传')
+        allure.dynamic.title(all_data['case_name'])
         upload_data = DataBusiness(browser)
-        result = upload_data.upload_data_business(case['data_set'], case['data_type'], case['file_name'])
+        result = upload_data.upload_data_business(all_data['data_set'], all_data['data_type'], all_data['file_name'])
         assert result == '导入成功'
 
-    @pytest.mark.skip
-    @allure.title(dom['case01']['case_name'])
-    def test_upload_dom(self, browser, refresh_driver):
-        case = self.dom['case01']
+    @pytest.mark.parametrize('all_data', dom)
+    def test_upload_dom(self, browser, all_data):
+        allure.dynamic.title(all_data['case_name'])
         upload_data = DataBusiness(browser)
-        upload_data.upload_data_business(case['data_set'], case['data_type'], case['file_name'])
+        result = upload_data.upload_data_business(all_data['data_set'], all_data['data_type'], all_data['file_name'])
+        assert result == '导入成功'
 
-    @allure.title(json['case01']['case_name'])
-    def test_upload_csv(self, browser, refresh_driver):
-        case = self.json['case01']
+    @pytest.mark.parametrize('all_data', jsons)
+    def test_upload_json(self, browser, all_data):
+        allure.dynamic.title(all_data['case_name'])
         upload_data = DataBusiness(browser)
-        upload_data.upload_data_business(case['data_set'], case['data_type'], case['file_name'])
+        result = upload_data.upload_data_business(all_data['data_set'], all_data['data_type'], all_data['file_name'])
+        assert result == '导入成功'
 
-    @allure.title(GDB['case01']['case_name'])
-    def test_upload_csv(self, browser, refresh_driver):
-        case = self.GDB['case01']
+    @pytest.mark.parametrize('all_data', gdb)
+    def test_upload_gdb(self, browser, all_data):
+        allure.dynamic.title(all_data['case_name'])
         upload_data = DataBusiness(browser)
-        upload_data.upload_data_business(case['data_set'], case['data_type'], case['file_name'])
+        result = upload_data.upload_data_business(all_data['data_set'], all_data['data_type'], all_data['file_name'])
+        assert result == '导入成功'
 
-    @allure.title(coordinate['case01']['case_name'])
-    def test_upload_csv(self, browser, refresh_driver):
-        case = self.coordinate['case01']
+    @pytest.mark.parametrize('all_data', coordinate)
+    def test_upload_coordinate(self, browser, all_data):
+        allure.dynamic.title(all_data['case_name'])
         upload_data = DataBusiness(browser)
-        upload_data.upload_data_business(case['data_set'], case['data_type'], case['file_name'])
+        result = upload_data.upload_data_business(all_data['data_set'], all_data['data_type'], all_data['file_name'])
+        assert result == '导入成功'
 
-    @allure.title(coordinate['case01']['case_name'])
-    def test_upload_csv(self, browser, refresh_driver):
-        case = self.coordinate['case01']
+    @pytest.mark.parametrize('all_data', document)
+    def test_upload_document(self, browser, all_data):
+        allure.dynamic.title(all_data['case_name'])
         upload_data = DataBusiness(browser)
-        upload_data.upload_data_business(case['data_set'], case['data_type'], case['file_name'])
+        result = upload_data.upload_data_business(all_data['data_set'], all_data['data_type'], all_data['file_name'])
+        assert result == '导入成功'
+
+    @pytest.mark.parametrize('all_data', media)
+    def test_upload_media(self, browser, all_data):
+        allure.dynamic.title(all_data['case_name'])
+        upload_data = DataBusiness(browser)
+        result = upload_data.upload_data_business(all_data['data_set'], all_data['data_type'], all_data['file_name'])
+        assert result == '导入成功'
+
+    @pytest.mark.parametrize('all_data', dem)
+    def test_upload_dem(self, browser, all_data):
+        allure.dynamic.title(all_data['case_name'])
+        upload_data = DataBusiness(browser)
+        result = upload_data.upload_data_business(all_data['data_set'], all_data['data_type'], all_data['file_name'])
+        assert result == '导入成功'
+
+    @pytest.mark.parametrize('all_data', osgb)
+    def test_upload_osgb(self, browser, all_data):
+        allure.dynamic.title(all_data['case_name'])
+        upload_data = DataBusiness(browser)
+        result = upload_data.upload_data_business(all_data['data_set'], all_data['data_type'], all_data['file_name'])
+        assert result == '导入成功'

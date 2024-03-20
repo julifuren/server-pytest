@@ -1,24 +1,20 @@
-
 vector:
-  case01:
-    case_name: '矢量面数据上传'
+  - case_name: '矢量面数据上传'
     data_file: 'ui-test'
     data_set: '矢量'
     data_type: '矢量数据文件'
     file_name: 'region-GK.zip'
 
+
 dom:
-  case01:
-    case_name: '正射数据上传'
+  - case_name: '正射数据上传'
     data_file: 'ui-test'
     data_set: '正射'
     data_type: '影像或栅格文件'
     file_name: '道路1706_前_2000.zip'
 
-
 json:
-  case01:
-    case_name: 'json数据上传'
+  - case_name: 'json数据上传'
     data_file: 'ui-test'
     data_set: 'json'
     data_type: 'JSON格式矢量数据文件'
@@ -26,7 +22,7 @@ json:
 
 
 GDB:
-  case01:
+  -
     case_name: 'GDB数据上传'
     data_file: 'ui-test'
     data_set: '地理数据库'
@@ -34,24 +30,128 @@ GDB:
     file_name: 'China.gdb.zip'
 
 
-坐标文件:
-  case01:
+coordinate: # 坐标文件类型
+  -
     case_name: '坐标文件csv数据上传'
     data_file: 'ui-test'
     data_set: '坐标文件'
     data_type: '带有坐标信息的表格文件'
     file_name: '调查对象信息.csv'
 
-文档文件:
-  case01:
-    case_name: '文档文件xls数据上传'
+document: # 文档类型
+  -
+    &document  #设置文档文件类型数据的锚点
+    case_name: '文档文件：xls数据上传'
     data_file: 'ui-test'
     data_set: '文档文件'
     data_type: '文档文件'
     file_name: '测试文件.xls'
-  case02:
-    case_name: '文档文件xlsx数据上传'
-    data_file: 'ui-test'
-    data_set: '文档文件'
-    data_type: '文档文件'
+  -
+    case_name: '文档文件：xlsx数据上传'
     file_name: 'PIE系列产品学习.xlsx'
+    <<: *document
+
+  -
+    case_name: '文档文件：ppt数据上传'
+    file_name: '等价划分测试策略.ppt'
+    <<: *document
+
+  - case_name: '文档文件：pptx数据上传'
+    file_name: '公共资源平台介绍v2.0.pptx'
+    <<: *document
+
+  - case_name: '文档文件：doc数据上传'
+    file_name: 'ATM局域网性能测试与分析.doc'
+    <<: *document
+
+  - case_name: '文档文件：docx数据上传'
+    file_name: '报销粘贴单.docx'
+    <<: *document
+
+  - case_name: '文档文件：pdf数据上传'
+    file_name: '放假通知.pdf'
+    <<: *document
+
+  - case_name: '文档文件：txt数据上传'
+    file_name: '获取必看.txt'
+    <<: *document
+
+  - case_name: '文档文件：json数据上传'
+    file_name: '大兴安岭地区.json'
+    <<: *document
+
+  - case_name: '文档文件：xml数据上传'
+    file_name: 'XML测试数据.xml'
+    <<: *document
+
+
+media:
+  - &media
+    case_name: '多媒体文件：tif数据上传'
+    data_file: 'ui-test'
+    data_set: '多媒体'
+    data_type: '多媒体文件'
+    file_name: '15year_3.2m.tif'
+  -
+    case_name: '多媒体文件：jpg数据上传'
+    file_name: '粤港澳大湾区区域图.jpg'
+    <<: *media
+  -
+    case_name: '多媒体文件：jpeg数据上传'
+    file_name: '生日祝福.jpeg'
+    <<: *media
+  -
+    case_name: '多媒体文件：gif数据上传'
+    file_name: '吴京.gif'
+    <<: *media
+
+#  -  暂无psd数据
+#    case_name: '多媒体文件：psd数据上传'
+#    file_name: ''
+#    <<: *media
+
+  -
+    case_name: '多媒体文件：png数据上传'
+    file_name: 'GIS地图数据分类.png'
+    <<: *media
+  -
+    case_name: '多媒体文件：bmp数据上传'
+    file_name: 'playing_cards.bmp'
+    <<: *media
+  -
+    case_name: '多媒体文件：mp3数据上传'
+    file_name: '周杰伦-.迷迭香.mp3'
+    <<: *media
+  -
+    case_name: '多媒体文件：mp4数据上传'
+    file_name: 'PIEEngine-Server时空数据服务平台介绍.mp4'
+    <<: *media
+
+DEM:
+  - &DEM
+    case_name: 'DEM文件：tif数据上传'
+    data_file: 'ui-test'
+    data_set: 'DEM'
+    data_type: '数字高程模型'
+    file_name: 'Beijing_aster_gdem_30m.tif'
+  -
+    case_name: 'DEM文件：tiff数据上传'
+    file_name: 'DEM.tiff'
+    <<: *DEM
+  -
+    case_name: 'DEM文件：zip数据上传'
+    file_name: 'Taiwan_aster_gdem_30m.zip'
+    <<: *DEM
+
+OSGB:
+  - &OSGB
+    case_name: '倾斜摄影模型：osgb数据上传'
+    data_file: 'ui-test'
+    data_set: '倾斜摄影'
+    data_type: '倾斜摄影模型'
+    file_name: 'Production_OSGB15.zip'
+
+  -
+    case_name: '倾斜摄影模型：3dtiles数据上传'
+    file_name: '3dtiles.zip'
+    <<: *OSGB

@@ -13,9 +13,9 @@ page_data_dir_uitest_btn = ('xpath', '//span[text()="ui-test"]/../../preceding-s
 # 创建数据集+按钮
 page_create_set_btn = ('css selector', '[class="edit-image"] [class="el-image__inner"]')
 # 工具栏添加数据按钮
-page_tool_add_data = ('css selector', '[class="btn-item"]:nth-child(2) [class="el-image el-tooltip"]')
+page_tool_add_data = ('xpath', '//div[@class="group-info-left flex-start"]//div[2]/*')
 # 工具栏添加刷新按钮
-page_tool_refresh = ('xpath','//div[@class="group-info-left flex-start"]/div[6]/div')
+page_tool_refresh = ('xpath','//div[@class="group-info-left flex-start"]/div[6]/*')
 # 导航栏的任务按钮
 page_task_btn = ('css selector', '[class="i-icon i-icon-transaction-order"]')
 # 任务列表中的第一条任务
