@@ -4,6 +4,7 @@ import os
 
 import allure
 import yaml
+from selenium import webdriver
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support import expected_conditions as ES
 from selenium.webdriver.support.wait import WebDriverWait
@@ -48,11 +49,11 @@ class WebKeys:
         # 编写代码为了自动关联出代码，写完后注释掉，不然会多开一个浏览器
         # self.driver = webdriver.Chrome()
 
-    @allure.step('传入的url标识为：{url_biaoshi}')
-    def open_url(self, url_biaoshi):
+    @allure.step('打开网址')
+    def open_url(self):
         data = pase_yaml('config', 'config.yaml')
-        with allure.step(f'打开网址{data["url"][url_biaoshi]}'):
-            self.driver.get(data['url'][url_biaoshi])
+        with allure.step(f"打开网址{data['url']}"):
+            self.driver.get(data['url'])
 
         # with allure.step(f'打开网址{url_data}'):
         #     self.driver.get(url_data)
@@ -103,5 +104,5 @@ if __name__ == '__main__':
     # data = pase_yaml('data','create_set.yaml')
     # vector = data['vector']
     # print(data)
-    data2 = pase_yaml('data', 'upload_data.yaml')
-    print(data2['文档文件'])
+    data2 = pase_yaml('config', 'config.yaml')
+    print(data2['url'])

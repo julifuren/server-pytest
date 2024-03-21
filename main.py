@@ -9,7 +9,7 @@ def run():
                  './report/result',
                  '--clean-alluredir',
                  # '-k','test_upload_vector',  # -k用于模糊查找指定的用例名
-                 './test_case/test_upload_data.py'
+                 './test_case/'
                  # '--allure-no-capture'
                  ])
     os.system('allure generate ./report/result/ -o ./report/report_allure/ --clean')

@@ -15,7 +15,7 @@ class LoginBusiness(WebKeys):
         self.locator(*other_page.page_login_Pwd).send_keys(pwd)
 
     @allure.step("开始登陆")
-    def login(self, account_num, url):
+    def login(self, account_num):
         """
 
         :param url: 登录url
@@ -38,9 +38,9 @@ class LoginBusiness(WebKeys):
                 with allure.step(f'输入账号:{data[account_num]["username"]} 输入密码：{data[account_num]["pwd"]}'):
                     # 输入账号和密码
                     self.input_userinfo(data[account_num]['username'], data[account_num]['pwd'])
+
                 with allure.step('图像识别解析验证码'):
-                    # 解析输入验证码
-                    yanzheng = parse_yanzheng(url)
+                    yanzheng = self.pase_yam()
                     self.locator(*other_page.page_login_verificationcode).send_keys(yanzheng)
                 with allure.step(f'尝试第{attempts}次登录'):
                     self.locator(*other_page.page_login_btn).click()
@@ -60,7 +60,7 @@ class LoginBusiness(WebKeys):
                     # finally:
                     #     # 重置隐士等待时间
                     #     self.driver.implicitly_wait(5)
-            if attempts == max_attempts:
+            else:
                 raise Exception("登录失败，已尝试登录{}次".format(max_attempts))
 
         elif not pase_data['yzm']:
@@ -74,6 +74,17 @@ class LoginBusiness(WebKeys):
             except TimeoutException:
                 raise Exception('未检测到导航栏中的 数据 按钮，请检查是否登录成功')
 
+    def pase_yam(self):
+        sleep(1)
+        el = self.locator(*other_page.page_verificationcode_pic)
+        url = el.get_attribute('src')
+        file_path = os.path.join(get_project_path(), 'other')
+        file_name = file_path + "\\" + 'yzm.png'
+        urllib.request.urlretrieve(url, file_name)
+        yzm = parse_yanzheng(file_name)
+        return yzm
+
+
 if __name__ == '__main__':
     from selenium import webdriver
 
@@ -81,4 +92,4 @@ if __name__ == '__main__':
     driver.implicitly_wait(10)
     test = LoginBusiness(driver)
     test.open_url('url-formal')
-    test.login('account02','url-formal')
+    test.login('account02', 'url-formal')
