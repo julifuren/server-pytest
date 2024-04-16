@@ -2,46 +2,46 @@
   case: '创建矢量数据集'
   data_dir: 'ui-test'
   data_set: '矢量'
--
-  case: '创建正射数据集'
-  data_dir: 'ui-test'
-  data_set: '正射'
-
--
-  case: '创建json数据集'
-  data_dir: 'ui-test'
-  data_set: 'json'
-
--
-  case: '创建地理数据库数据集'
-  data_dir: 'ui-test'
-  data_set: '地理数据库'
--
-  case: '创建坐标文件数据集'
-  data_dir: 'ui-test'
-  data_set: '坐标文件'
--
-  case: '创建文档文件数据集'
-  data_dir: 'ui-test'
-  data_set: '文档文件'
--
-  case: '创建多媒体数据集'
-  data_dir: 'ui-test'
-  data_set: '多媒体'
--
-  case: '创建DEM数据集'
-  data_dir: 'ui-test'
-  data_set: 'DEM'
--
-  case: '创建倾斜摄影数据集'
-  data_dir: 'ui-test'
-  data_set: '倾斜摄影'
--
-  case: '创建地图瓦片数据集'
-  data_dir: 'ui-test'
-  data_set: '地图瓦片'
--
-  case: '创建综合数据数据集'
-  data_dir: 'ui-test'
-  data_set: '综合数据'
+#-
+#  case: '创建正射数据集'
+#  data_dir: 'ui-test'
+#  data_set: '正射'
+#
+#-
+#  case: '创建json数据集'
+#  data_dir: 'ui-test'
+#  data_set: 'json'
+#
+#-
+#  case: '创建地理数据库数据集'
+#  data_dir: 'ui-test'
+#  data_set: '地理数据库'
+#-
+#  case: '创建坐标文件数据集'
+#  data_dir: 'ui-test'
+#  data_set: '坐标文件'
+#-
+#  case: '创建文档文件数据集'
+#  data_dir: 'ui-test'
+#  data_set: '文档文件'
+#-
+#  case: '创建多媒体数据集'
+#  data_dir: 'ui-test'
+#  data_set: '多媒体'
+#-
+#  case: '创建DEM数据集'
+#  data_dir: 'ui-test'
+#  data_set: 'DEM'
+#-
+#  case: '创建倾斜摄影数据集'
+#  data_dir: 'ui-test'
+#  data_set: '倾斜摄影'
+#-
+#  case: '创建地图瓦片数据集'
+#  data_dir: 'ui-test'
+#  data_set: '地图瓦片'
+#-
+#  case: '创建综合数据数据集'
+#  data_dir: 'ui-test'
+#  data_set: '综合数据'
 

@@ -58,15 +58,6 @@ def browser():
     # os.system('taskkill /im chromedriver.exe /F')
     # os.system('taskkill /im chrome.exe /F')
 
-
-"""
-    装饰器@pytest.hookimpl(hookwrapper=True)等价于 @pytest.mark.hookwrapper
-    作用：
-    a:可以获取测试用例的信息，比如用例函数的描述
-    b:可以获取测试用例的执行结果，yield，返回一个result对象
-"""
-
-
 # 用例失败截图fixture
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport():

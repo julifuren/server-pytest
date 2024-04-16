@@ -8,7 +8,7 @@ from logic import data_business
 
 @allure.feature('创建数据集测试用例')
 @pytest.mark.parametrize('test_data', pase_yaml('data', 'create_set.yaml'))
-def test_create_set(browser, login,refresh_driver, test_data):
+def test_create_set(browser, login, test_data):
     allure.dynamic.title(test_data['case'])
     create_set_business = data_business.DataBusiness(browser)
     create_set_business.create_data_set_business(test_data['data_set'])
