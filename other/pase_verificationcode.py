@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
-import ddddocr
-import requests
+import time
 
+import ddddocr
+import subprocess
 from kew_word.kewword import *
+
 
 def parse_yanzheng(path):
     """
@@ -21,5 +23,8 @@ def parse_yanzheng(path):
     return res
 
 
+
+
 if __name__ == '__main__':
-    print(parse_yanzheng('url-formal'))
+    # print(parse_yanzheng('url-formal'))
+    pass

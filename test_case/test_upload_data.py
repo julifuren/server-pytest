@@ -19,6 +19,7 @@ class TestUploadData:
     dem = data['DEM']
     osgb = data['OSGB']
 
+
     @allure.feature('数据上传测试用例')
     @pytest.mark.parametrize('all_data', vector)
     def test_upload_vector(self, browser, all_data, login):

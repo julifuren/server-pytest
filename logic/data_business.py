@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 import os
+import re
 import time
 from time import sleep
+
 import allure
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
+
 from kew_word.kewword import WebKeys, get_project_path
 from pages import other_page, data_page
 
@@ -60,12 +63,19 @@ class DataBusiness(WebKeys):
 
     # 上传数据业务流程
     def upload_data_business(self, set_name, data_type, file_name):
+        """
+
+        :param set_name: 指定上传的数据集
+        :param data_type: 指定上传的数据类型
+        :param file_name: 上传数据文件名
+        :return:
+        """
         with allure.step("流程代码路径：%s" % __file__):
             pass
         with allure.step('点击数据模块'):
             self.locator(*other_page.page_main_Data_btn).click()
         with allure.step('点击ui-test文件目录'):
-            self.locator(*data_page.page_data_dir_uitest_btn).click()
+            self.locator_explicitly_until(*data_page.page_data_dir_uitest_btn).click()
         with allure.step(f'点击{set_name}数据集'):
             self.locator_explicitly_until('xpath',
                                           '//span[text()="{}" and @class="dataset-span"]'.format(set_name)).click()
@@ -159,8 +169,102 @@ class DataBusiness(WebKeys):
                 sleep(5)
                 self.locator(*data_page.page_tool_refresh).click()
                 continue
-            elif task_status in ['导入失败','导入成功']:
+            elif task_status in ['导入失败', '导入成功']:
                 return task_status
 
         else:
             return '导入超时'
+
+    # 检查数据概览页面的信息
+    def check_data_info(self,set_name, object_name):
+        self.locator(*other_page.page_main_Data_btn).click()
+        self.get_first_object(set_name, object_name)
+        start_time = time.time()
+        while time.time() - start_time < 10:
+            geography_info = self.locator(*data_page.data_overview_geography).text
+            if geography_info in ' 暂无位置信息 ':
+                sleep(1)
+            else:
+                return geography_info
+
+
+    # 进入指定数据集的指定数据对象概览页面
+    def get_first_object(self,set_name, object_name):
+        """
+        :param set_name: 数据集名称
+        :param object_name: 数据对象名称
+        :return:
+        """
+
+        self.locator_explicitly_until(*data_page.page_data_dir_uitest_btn).click()
+        self.locator_explicitly_until('xpath',
+                                      '//span[text()="{}" and @class="dataset-span"]'.format(set_name)).click()
+        sleep(1)
+        # replace=object_name.rstrip(".zip")
+        # ele = self.locators('xpath',f'//*[@class="flex-start data-set-body"]//span[contains(text(),"{replace}")]')
+        # print(ele)
+        # ele[0].click()
+        self.locator_explicitly_until('xpath',
+                                      '(//*[contains(text(),"{}")]//ancestor::div[@class="set-content-card"])[1]'.format(object_name)).click()
+
+    # 修改数据概览页面中的数据简介
+    def change_data_intro(self,set_name, object_name,info):
+        """
+        :param set_name: 数据集名称
+        :param object_name: 数据对象名称
+        :param info: 数据简介参数
+        :return:
+        """
+        self.locator(*other_page.page_main_Data_btn).click()
+
+        self.get_first_object(set_name, object_name)
+        try:
+            self.locator(*data_page.data_overview_intro_btn).click()
+        except NoSuchElementException:
+            self.locator(*data_page.data_overview_intro_btn2).click()
+        self.locator(*data_page.data_overview_intro_input).send_keys(info)
+        self.locator(*data_page.data_overview_intro).click()
+        text = self.locator(*data_page.data_overview_intro_mes).text
+        return text
+
+    # 修改元数据信息
+    def change_metadata_info(self,set_name, object_name,mes):
+        self.locator(*other_page.page_main_Data_btn).click()
+        self.get_first_object(set_name, object_name)
+        self.locator(*data_page.data_overview_metadata_btn).click()
+        sleep(1)
+        self.locator(*data_page.data_overview_metadata_all).click()
+        sleep(1)
+        self.locator(*data_page.data_overview_metadata_edit).click()
+        sleep(2)
+        self.locator_explicitly_until(*data_page.data_overview_metadata_input).send_keys(str(mes))
+        self.locator(*data_page.data_overview_metadata_submit).click()
+        self.locator(*data_page.data_overview_metadata_confirm).click()
+        el = self.locator_explicitly_until(*data_page.data_overview_metadata_mes)
+        text = el.get_attribute('textContent')
+        print(text)
+        return text
+
+    def check_data_content(self,set_name, object_name):
+        self.locator(*other_page.page_main_Data_btn).click()
+        if set_name in ['矢量','正射']:
+            self.get_first_object(set_name, object_name)
+        else:
+            return '跳过'
+        self.locator(*data_page.data_overview_content_btn).click()
+        if set_name == '矢量':
+            self.locator(*data_page.data_overview_content_header)
+            sleep(1)
+            content_sum = self.locator(*data_page.data_overview_content_sum).text
+            content_sum_new = int(''.join(re.findall(r'\d+', content_sum)))
+            if content_sum_new != 0:
+                return '通过'
+            else:
+                return '失败'
+        elif set_name == '正射':
+            try:
+                self.locator_explicitly_until(*data_page.data_overview_waveband_name,3)
+                return '通过'
+            except Exception:
+                return '失败'
+

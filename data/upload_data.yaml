@@ -87,15 +87,11 @@ document: # 文档类型
 
 media:
   - &media
-    case_name: '多媒体文件：tif数据上传'
+    case_name: '多媒体文件：jpg数据上传'
+    file_name: '粤港澳大湾区区域图.jpg'
     data_file: 'ui-test'
     data_set: '多媒体'
     data_type: '多媒体文件'
-    file_name: '15year_3.2m.tif'
-  -
-    case_name: '多媒体文件：jpg数据上传'
-    file_name: '粤港澳大湾区区域图.jpg'
-    <<: *media
   -
     case_name: '多媒体文件：jpeg数据上传'
     file_name: '生日祝福.jpeg'

@@ -71,6 +71,11 @@ class WebKeys:
         self.locator_station(el)
         return el
 
+    def locators(self, name, value):
+        el = self.driver.find_elements(name,value)
+
+        return el
+
     # 显示定位的地方，方便确认定位位置
     def locator_station(self, element):
         self.driver.execute_script(
@@ -92,17 +97,15 @@ class WebKeys:
                                                                         message='显示等待失败')
         return el
 
-    def find_element_explicitly(self, locator, timeout=10, poll_frequency=0.5):
-        return WebDriverWait(self.driver, timeout, poll_frequency).until(
-            expected_conditions.presence_of_element_located(locator))
+    # def find_element_explicitly(self, locator, timeout=10, poll_frequency=0.5):
+    #     return WebDriverWait(self.driver, timeout, poll_frequency).until(
+    #         expected_conditions.presence_of_element_located(locator))
 
 
 if __name__ == '__main__':
-    # path = get_project_path()
-    # print(os.path.join(path, 'other'))
-    # print(pase_yaml('config', 'login_data.yaml'))
-    # data = pase_yaml('data','create_set.yaml')
-    # vector = data['vector']
-    # print(data)
-    data2 = pase_yaml('config', 'config.yaml')
-    print(data2['url'])
+    list01 = []
+    data2 = pase_yaml('data', 'data_flow.yaml')
+    a = list01.append(data2)
+
+    print(list01)
+    print(data2)

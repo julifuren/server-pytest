@@ -1,0 +1,28 @@
+case01:
+  case_name: '矢量数据流程测试'
+  data_info:
+    # 需要上传的文件目录和数据集位置
+    data_file: 'ui-test'
+    data_set: '矢量'
+    data_type: '矢量数据文件'
+    file_name: 'region-GK.zip'
+    object_name: 'region-GK'
+    overview:
+      geographic_location: '亚洲-中国'
+      data_intro: 'region-GK矢量数据描述测试'
+      metadata: '元数据编辑测试'
+      context_sum: 20
+
+case02:
+  case_name: '正射数据流程测试'
+  data_info:
+    # 需要上传的文件目录和数据集位置
+    data_file: 'ui-test'
+    data_set: '正射'
+    data_type: '影像或栅格文件'
+    file_name: '16year3.2m.zip'
+    object_name: '16year3.2m'
+    overview:
+      geographic_location: '亚洲-中国'
+      data_intro: '16year3.2m 数据描述测试'
+      metadata: '元数据编辑测试'

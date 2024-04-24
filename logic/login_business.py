@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import urllib.request
 from time import sleep
-
+import time
 from selenium.common.exceptions import TimeoutException
 
 from other.pase_verificationcode import *
@@ -32,9 +32,13 @@ class LoginBusiness(WebKeys):
         if pase_data['yzm']:
             print('开启验证码登录')
             # 限制最大登录次数
-            max_attempts = 5
+            max_attempts = 10
             attempts = 1
             while attempts <= max_attempts:
+                if attempts == 5:
+                    print(f'登录失败次数已达到{attempts}次，等待5分钟后再次尝试登录')
+                    sleep(300)
+
                 with allure.step(f'输入账号:{data[account_num]["username"]} 输入密码：{data[account_num]["pwd"]}'):
                     # 输入账号和密码
                     self.input_userinfo(data[account_num]['username'], data[account_num]['pwd'])
@@ -53,8 +57,10 @@ class LoginBusiness(WebKeys):
                         continue
 
                     except TimeoutException:
-                        self.locator_explicitly_until(*other_page.page_main_Data_btn, time=3)
+                        self.driver.implicitly_wait(2)
+                        self.locator_explicitly_until(*other_page.page_main_Data_btn, time=2)
                         print('检测到导航栏 数据 模块，登录成功')
+                        self.driver.implicitly_wait(5)
                         break
 
                     # finally:
@@ -79,7 +85,13 @@ class LoginBusiness(WebKeys):
         el = self.locator(*other_page.page_verificationcode_pic)
         url = el.get_attribute('src')
         file_path = os.path.join(get_project_path(), 'other')
+        # timestamp = int(time.time())
+
+        # time_stamp = f"file_{os.getpid()}_{timestamp}.png"
+        # file_name = file_path + "\\" + time_stamp
         file_name = file_path + "\\" + 'yzm.png'
+
+
         urllib.request.urlretrieve(url, file_name)
         yzm = parse_yanzheng(file_name)
         return yzm

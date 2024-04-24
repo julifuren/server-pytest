@@ -16,7 +16,7 @@ def refresh_driver(browser):
 
 # 登录业务fixture
 @allure.title('执行登录操作')
-@pytest.fixture(scope='package')
+@pytest.fixture(scope='module')
 def login(browser):
     login_business = LoginBusiness(browser)
     login_business.open_url()  # 打开config.yaml文件中对应的url
@@ -24,7 +24,7 @@ def login(browser):
 
 
 @allure.title('初始化driver')
-@pytest.fixture(scope='package')
+@pytest.fixture(scope='module')
 def browser():
     """
     全局定义浏览器驱动，方便下面的hook函数引用driver

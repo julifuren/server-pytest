@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-数据页面元素
+数据一级页面元素
 """
 # 添加目录按钮
 page_create_dir_btn = ('xpath', '//span[@title="添加目录"]')
@@ -53,3 +53,44 @@ page_progress_bar_text = ('xpath', '//div[text()="100%"]')
 page_progress_close_btn = ('xpath', '//div[contains(@class,"create-type")]//i')
 # 添加数据弹窗 数据导入 文本
 page_progress_import_statue = ('css selector', '[class="init-store-status-text"]')
+
+"""
+数据概览页面元素
+"""
+# 数据概览页面 '地理位置'
+data_overview_geography = ('xpath', '//p[text()="地理位置"]/following-sibling::p')
+# 数据概览页面 修改数据简介按钮
+data_overview_intro_btn = ('xpath', '//div[@class="edit-tool tool-hover"]')
+# 数据概览页面 修改数据简介按钮2
+data_overview_intro_btn2 = ('xpath', '//p[contains(text(),"简要描述")]')
+# 数据概览页面 数据简介 输入框
+data_overview_intro_input = ('css selector', '[class="input-box"] div textarea')
+# 用于点击使数据简介生效
+data_overview_intro = ('xpath', "//p[text()='数据简介']")
+# 数据简介修改成功后的提示语
+data_overview_intro_mes = ('css selector', '[class="el-message__content"]')
+# 元数据按钮
+data_overview_metadata_btn = ('xpath', "//div[text()='元数据']")
+# 数据内容按钮
+data_overview_content_btn = ('xpath', "//div[text()='数据内容']")
+# 全部元数据按钮
+data_overview_metadata_all = ('xpath',"//div[text()='全部数据项']/..//span")
+# 元数据编辑按钮
+data_overview_metadata_edit = ('xpath',"//span[text()=' 编 辑 ']")
+# 元数据提交按钮
+data_overview_metadata_submit = ('xpath',"//span[text()='提 交']")
+# 元数据成果代号文本输入框
+data_overview_metadata_input = ('xpath',"//label[text()='成果代号']//following-sibling::div//input")
+# 元数据确认弹窗中 确定 按钮
+data_overview_metadata_confirm = ('xpath',"//span[text()='确 定']")
+# 元数据修改成功后的提示语
+data_overview_metadata_mes = ('xpath',"//p[text()='提交成功!']")
+# 矢量数据的表头
+data_overview_content_header = ('css selector', '[class="el-table__header"]')
+# 矢量数据内容总条数
+data_overview_content_sum = ('xpath','//div[@class="el-pagination is-background"]/span[1]')
+# 正射数据
+data_overview_waveband_name = ('xpath',"//div[text()='波段名称']")
+
+
+

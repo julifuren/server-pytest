@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import re
 import urllib.request
 from time import sleep
 
@@ -10,50 +11,25 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 
-from kew_word.kewword import WebKeys
+from kew_word.kewword import WebKeys, pase_yaml
+from logic.data_business import DataBusiness
 from pages import other_page, data_page
 
 # os.popen("D:\PythonTest\Pie_Server2.0\debug\chrome.bat")
 # sleep(3)
-#
-#
-# options = webdriver.ChromeOptions()
-# options.debugger_address = '127.0.0.1:9222'
-# driver = webdriver.Chrome(options=options)
-# sleep(2)
-# wk = WebKeys(driver)
-# driver.get('https://engine.piesat.cn/server/data/')
 
-driver = webdriver.Chrome()
+
+options = webdriver.ChromeOptions()
+options.debugger_address = '127.0.0.1:9222'
+driver = webdriver.Chrome(options=options)
 sleep(2)
 wk = WebKeys(driver)
-driver.get('https://engine.piesat.cn/server/data/')
+# driver.get('https://engine.piesat.cn/server/data/')
+
+
 sleep(2)
-# 定位到图片元素
-ele = wk.locator_explicitly_until(*other_page.page_verificationcode_pic)
+wk = WebKeys(driver)
+a = wk.locators('xpath','//*[@class="flex-start data-set-body"]//span[contains(text(),"region-GK")]')[1]
+print(a)
+a.click()
 
-
-# 获取图片的实际URL
-url = ele.get_attribute('src')
-
-# url = 'data:image/png;base64,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'
-
-print('123')
-print(url)
-# url = 'https://'+image_url
-urllib.request.urlretrieve(url,'yam.png')
-
-
-
-# headers = {
-#     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36'
-# }  # 模拟浏览器打开网页
-
-
-
-# 在浏览器中直接下载图片
-
-# response = requests.get(url)
-# #
-# with open('yam.jpg','wb') as file:
-#     file.write(response.content)
