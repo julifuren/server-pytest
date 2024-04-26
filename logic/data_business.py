@@ -13,6 +13,12 @@ from kew_word.kewword import WebKeys, get_project_path
 from pages import other_page, data_page
 
 
+def add_timestamp(text):
+    timestamp = int(time.time())
+    result = f"{text}_{timestamp}"
+    return result
+
+
 class DataBusiness(WebKeys):
 
     # 创建数据集流程
@@ -176,7 +182,7 @@ class DataBusiness(WebKeys):
             return '导入超时'
 
     # 检查数据概览页面的信息
-    def check_data_info(self,set_name, object_name):
+    def check_data_info(self, set_name, object_name):
         self.locator(*other_page.page_main_Data_btn).click()
         self.get_first_object(set_name, object_name)
         start_time = time.time()
@@ -187,9 +193,8 @@ class DataBusiness(WebKeys):
             else:
                 return geography_info
 
-
     # 进入指定数据集的指定数据对象概览页面
-    def get_first_object(self,set_name, object_name):
+    def get_first_object(self, set_name, object_name):
         """
         :param set_name: 数据集名称
         :param object_name: 数据对象名称
@@ -200,15 +205,12 @@ class DataBusiness(WebKeys):
         self.locator_explicitly_until('xpath',
                                       '//span[text()="{}" and @class="dataset-span"]'.format(set_name)).click()
         sleep(1)
-        # replace=object_name.rstrip(".zip")
-        # ele = self.locators('xpath',f'//*[@class="flex-start data-set-body"]//span[contains(text(),"{replace}")]')
-        # print(ele)
-        # ele[0].click()
         self.locator_explicitly_until('xpath',
-                                      '(//*[contains(text(),"{}")]//ancestor::div[@class="set-content-card"])[1]'.format(object_name)).click()
+                                      '(//*[contains(text(),"{}")]//ancestor::div[@class="set-content-card"])[1]'.format(
+                                          object_name)).click()
 
     # 修改数据概览页面中的数据简介
-    def change_data_intro(self,set_name, object_name,info):
+    def change_data_intro(self, set_name, object_name, info):
         """
         :param set_name: 数据集名称
         :param object_name: 数据对象名称
@@ -228,7 +230,7 @@ class DataBusiness(WebKeys):
         return text
 
     # 修改元数据信息
-    def change_metadata_info(self,set_name, object_name,mes):
+    def change_metadata_info(self, set_name, object_name, mes):
         self.locator(*other_page.page_main_Data_btn).click()
         self.get_first_object(set_name, object_name)
         self.locator(*data_page.data_overview_metadata_btn).click()
@@ -245,9 +247,10 @@ class DataBusiness(WebKeys):
         print(text)
         return text
 
-    def check_data_content(self,set_name, object_name):
+    # 检查数据内容页
+    def check_data_content(self, set_name, object_name):
         self.locator(*other_page.page_main_Data_btn).click()
-        if set_name in ['矢量','正射']:
+        if set_name in ['矢量', '正射']:
             self.get_first_object(set_name, object_name)
         else:
             return '跳过'
@@ -263,8 +266,34 @@ class DataBusiness(WebKeys):
                 return '失败'
         elif set_name == '正射':
             try:
-                self.locator_explicitly_until(*data_page.data_overview_waveband_name,3)
+                self.locator_explicitly_until(*data_page.data_overview_waveband_name, 3)
                 return '通过'
             except Exception:
                 return '失败'
 
+    # 修改数据样式
+    def change_data_style(self, set_name, object_name):
+        self.locator(*other_page.page_main_Data_btn).click()
+        self.get_first_object(set_name, object_name)
+        self.locator(*data_page.data_overview_image_btn).click()
+        sleep(1)
+        self.locator(*data_page.data_overview_image_config).click()
+        self.locator(*data_page.data_overview_image_style1).click()
+        self.locator(*data_page.data_overview_image_save).click()
+        el = self.locator(*data_page.data_overview_image_save_mes)
+        text = el.get_attribute('textContent')
+        return text
+
+    # 发布服务
+    def release_serve(self, set_name, object_name):
+        self.locator(*other_page.page_main_Data_btn).click()
+        self.get_first_object(set_name, object_name)
+        sleep(1)
+        self.locator(*data_page.data_overview_release_btn).click()
+        server_str = add_timestamp(object_name)
+        self.locator(*data_page.data_overview_release_input).send_keys(server_str)
+        self.locator(*data_page.data_overview_release_next).click()
+        self.locator(*data_page.data_overview_release_btn2).click()
+        el = self.locator_explicitly_until(*data_page.data_overview_release_mes)
+        text = el.get_attribute('textContent')
+        return text
