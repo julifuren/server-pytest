@@ -92,9 +92,15 @@ class DataBusiness(WebKeys):
         with allure.step(f'选择上传的数据类型为{data_type}'):
             # 点击数据类型下拉框
             self.locator(*data_page.page_data_type_select).click()
+            sleep(0.5)
+
             # 选择数据类型
-            self.locator_explicitly_until('xpath', '//strong[text()="{}"]'.format(data_type)).click()
-            sleep(1)
+            el = self.locator_explicitly_until('xpath', '//strong[text()="{}"]'.format(data_type))
+            js = 'arguments[0].scrollIntoView()'
+            self.driver.execute_script(js, el)
+            el.click()
+            sleep(0.5)
+
         with allure.step('上传文件'):
             # 上传文件
             data_path = os.path.join(get_project_path(), 'files', data_type, file_name)
@@ -208,6 +214,7 @@ class DataBusiness(WebKeys):
         self.locator_explicitly_until('xpath',
                                       '(//*[contains(text(),"{}")]//ancestor::div[@class="set-content-card"])[1]'.format(
                                           object_name)).click()
+        sleep(2)
 
     # 修改数据概览页面中的数据简介
     def change_data_intro(self, set_name, object_name, info):
@@ -226,7 +233,8 @@ class DataBusiness(WebKeys):
             self.locator(*data_page.data_overview_intro_btn2).click()
         self.locator(*data_page.data_overview_intro_input).send_keys(info)
         self.locator(*data_page.data_overview_intro).click()
-        text = self.locator(*data_page.data_overview_intro_mes).text
+        el = self.locator_explicitly_until(*data_page.data_overview_intro_mes)
+        text = el.get_attribute('textContent')
         return text
 
     # 修改元数据信息
@@ -275,10 +283,10 @@ class DataBusiness(WebKeys):
     def change_data_style(self, set_name, object_name):
         self.locator(*other_page.page_main_Data_btn).click()
         self.get_first_object(set_name, object_name)
-        self.locator(*data_page.data_overview_image_btn).click()
+        self.locator_explicitly_until(*data_page.data_overview_image_btn).click()
         sleep(1)
-        self.locator(*data_page.data_overview_image_config).click()
-        self.locator(*data_page.data_overview_image_style1).click()
+        self.locator_explicitly_until(*data_page.data_overview_image_config).click()
+        self.locator_explicitly_until(*data_page.data_overview_image_style1).click()
         self.locator(*data_page.data_overview_image_save).click()
         el = self.locator(*data_page.data_overview_image_save_mes)
         text = el.get_attribute('textContent')
@@ -295,5 +303,25 @@ class DataBusiness(WebKeys):
         self.locator(*data_page.data_overview_release_next).click()
         self.locator(*data_page.data_overview_release_btn2).click()
         el = self.locator_explicitly_until(*data_page.data_overview_release_mes)
+        text = el.get_attribute('textContent')
+        return text
+
+    # 删除数据
+    def delete_data(self,set_name, object_name):
+        self.locator(*other_page.page_main_Data_btn).click()
+        self.locator_explicitly_until(*data_page.page_data_dir_uitest_btn).click()
+
+        # 点击指定的数据集
+        self.locator_explicitly_until('xpath',
+                                      '//span[text()="{}" and @class="dataset-span"]'.format(set_name)).click()
+        sleep(1)
+
+        # 勾选指定的数据对象
+        self.locator_explicitly_until('xpath', f'(//span[contains(text(),"{object_name}")]//ancestor::div['
+                                               f'@class="catalog-data-card"])[1]//span[@class="el-checkbox__inner"]').click()
+
+        self.locator(*data_page.page_tool_delete).click()
+        self.locator(*data_page.page_pop_delete_btn).click()
+        el = self.locator(*data_page.page_delete_mes)
         text = el.get_attribute('textContent')
         return text

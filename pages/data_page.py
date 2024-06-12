@@ -12,14 +12,21 @@ page_data_dir_uitest = ('xpath', '//span[text()="ui-test"]')
 page_data_dir_uitest_btn = ('xpath', '//span[text()="ui-test"]/../../preceding-sibling::span')
 # 创建数据集+按钮
 page_create_set_btn = ('css selector', '[class="edit-image"] [class="el-image__inner"]')
-# 工具栏添加数据按钮
+# 工具栏：添加数据按钮
 page_tool_add_data = ('xpath', '//div[@class="group-info-left flex-start"]//div[2]/*')
-# 工具栏添加刷新按钮
+# 工具栏：删除数据按钮
+page_tool_delete = ('xpath', '//div[@class="group-info-left flex-start"]/div[3]/*')
+# 工具栏：添加刷新按钮
 page_tool_refresh = ('xpath', '//div[@class="group-info-left flex-start"]/div[6]/*')
+
 # 导航栏的任务按钮
 page_task_btn = ('css selector', '[class="i-icon i-icon-transaction-order"]')
 # 任务列表中的第一条任务
 page_task_first_status = ('xpath', '//*[@class="status-card-content"]/div[1]//div[@class="status-judge"]/span')
+# 删除数据弹窗删除按钮
+page_pop_delete_btn = ('xpath','//*[@aria-label="删除数据"]//span[text()="删 除"]')
+# 删除数据后提示语
+page_delete_mes = ('xpath','//p[@class="el-message__content"]')
 
 """
 创建数据集弹窗元素

@@ -22,14 +22,20 @@ from pages import other_page, data_page
 options = webdriver.ChromeOptions()
 options.debugger_address = '127.0.0.1:9222'
 driver = webdriver.Chrome(options=options)
-sleep(2)
+sleep(1)
 wk = WebKeys(driver)
 # driver.get('https://engine.piesat.cn/server/data/')
 
 
 sleep(2)
 wk = WebKeys(driver)
-a = wk.locators('xpath','//*[@class="flex-start data-set-body"]//span[contains(text(),"region-GK")]')[1]
-print(a)
-a.click()
+el = wk.locator('css selector','[class="el-input el-input--mini el-input-group el-input-group--append sib-url-info-input" ] input')
+
+
+print(el.get_attribute('value'))
+
+# js = 'return el.getElements()'
+# a = driver.execute_script(js,el)
+# print(a)
+
 

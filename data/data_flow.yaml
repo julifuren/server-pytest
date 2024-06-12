@@ -12,6 +12,13 @@ case01:
       data_intro: 'region-GK矢量数据描述测试'
       metadata: '元数据编辑测试'
       context_sum: 20
+    service:
+      name: 'region-GK'  #发布的服务名称包含的字段
+      TILECOL: 6742  # x
+      TILEROW: 3102  # y
+      TILEMATRIX: 13  # z
+#      Content-Length: 2026 # 对应的瓦片大小
+
 
 case02:
   case_name: '正射数据流程测试'
@@ -22,7 +29,8 @@ case02:
     data_type: '影像或栅格文件'
     file_name: '16year3.2m.zip'
     object_name: '16year3.2m'
-    overview:
+
+    overview: #概览页面参数
       geographic_location: '亚洲-中国'
       data_intro: '16year3.2m 数据描述测试'
       metadata: '元数据编辑测试'

@@ -8,7 +8,7 @@ from logic.login_business import LoginBusiness
 
 
 @allure.title('刷新浏览器')
-@pytest.fixture(scope='function',autouse=True)
+@pytest.fixture(scope='function', autouse=True)
 def refresh_driver(browser):
     driver = browser
     driver.refresh()
@@ -35,8 +35,17 @@ def browser():
     with allure.step('打开浏览器'):
         # 加载浏览器驱动
         options = webdriver.ChromeOptions()
-        options.add_argument('start-maximized')
+        options.add_argument('start-maximized')  # 最大化(无头模式下无法使用)
+
+        options.add_argument('--headless')  # 无头模式下运行
+        options.add_argument("--window-size=1920,1080")
+
         driver = webdriver.Chrome(options=options)
+
+        # options = webdriver.Edge()
+        #
+        # options.add_argument('start-maximized')
+        # driver = webdriver.Chrome(options=options)
 
     # 隐式等待5秒
     driver.implicitly_wait(5)
@@ -49,14 +58,15 @@ def browser():
     # 浏览器退出
     with allure.step('退出浏览器'):
         driver.quit()
-    """
-        这种debug模式，下面的方法无法退出浏览器
-        driver.quit()
-        driver.close()
-    """
-    # 通过命令杀死进程
-    # os.system('taskkill /im chromedriver.exe /F')
-    # os.system('taskkill /im chrome.exe /F')
+        """
+            这种debug模式，下面的方法无法退出浏览器
+            driver.quit()
+            driver.close()
+        """
+        # 通过命令杀死进程
+        # os.system('taskkill /im chromedriver.exe /F')
+        # os.system('taskkill /im chrome.exe /F')
+
 
 # 用例失败截图fixture
 @pytest.hookimpl(hookwrapper=True)
