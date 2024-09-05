@@ -37,7 +37,7 @@ def browser():
         options = webdriver.ChromeOptions()
         options.add_argument('start-maximized')  # 最大化(无头模式下无法使用)
 
-        options.add_argument('--headless')  # 无头模式下运行
+        # options.add_argument('--headless')  # 无头模式下运行
         options.add_argument("--window-size=1920,1080")
 
         driver = webdriver.Chrome(options=options)

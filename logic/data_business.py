@@ -104,6 +104,7 @@ class DataBusiness(WebKeys):
         with allure.step('上传文件'):
             # 上传文件
             data_path = os.path.join(get_project_path(), 'files', data_type, file_name)
+            print(data_path)
             # 输入文件路径
             self.locator(*data_page.page_upload_input).send_keys(data_path)
             # 定位文件上传成功后的标识
